@@ -20,7 +20,7 @@ class TrackNumber(object):
       return False   
     if len(num.number) is not 9:
       return False  
-      
+
     mult = [8, 6, 4, 2, 3, 5, 9, 7] #const for multiply
     prod = sum(map(lambda inn: int(inn[0])*inn[1], zip(num.number[:8], mult)))
 
@@ -30,6 +30,4 @@ class TrackNumber(object):
       return False 
     if check != int(num.number[-1]):
       return False
-
-    print num.number, check
     return True

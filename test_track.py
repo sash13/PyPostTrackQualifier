@@ -39,30 +39,28 @@ class TrackNumberValidTest(unittest.TestCase):
   def setUp(self):
     self.tn = TrackNumber()
 
+  def validWraper(self, num, ans):
+    answer = self.tn.parse(num)
+    valid = self.tn.valid(answer[0])
+    if ans:
+      self.assertTrue(valid)
+    else:
+      self.assertFalse(valid)
+
   def testValidOfInternationalTrackNumberFalse(self):
-    answer = self.tn.parse('RJ222222221CN')
-    valid = self.tn.valid(answer[0])
-    self.assertFalse(valid)
-
-  def testValidOfInternationalTrackNumberFalse3(self):
-    answer = self.tn.parse('RK0267053CN')
-    valid = self.tn.valid(answer[0])
-    self.assertFalse(valid)
-
-  def testValidOfInternationalTrackNumberTrue1(self):
-    answer = self.tn.parse('RJ482508186CN')
-    valid = self.tn.valid(answer[0])
-    self.assertTrue(valid)
-
-  def testValidOfInternationalTrackNumberTrue(self):
-    answer = self.tn.parse('RK026705563CN')
-    valid = self.tn.valid(answer[0])
-    self.assertTrue(valid)
+    self.validWraper('RJ222222221CN', False)
 
   def testValidOfInternationalTrackNumberFalse2(self):
-    answer = self.tn.parse('1194529567922')
-    valid = self.tn.valid(answer[0])
-    self.assertFalse(valid)
+    self.validWraper('1194529567922', False)
+
+  def testValidOfInternationalTrackNumberFalse3(self):
+    self.validWraper('RK0267053CN', False)
+
+  def testValidOfInternationalTrackNumberTrue(self):
+    self.validWraper('RJ482508186CN', True)
+
+  def testValidOfInternationalTrackNumberTrue1(self):
+    self.validWraper('RK026705563CN', True)
 
 if __name__ == '__main__':
   unittest.main()
