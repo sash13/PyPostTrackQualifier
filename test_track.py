@@ -18,6 +18,10 @@ class TrackNumberTest(unittest.TestCase):
     answer = self.tn.parse('RJ255255138CN, RS431632444NL, 11945295679')
     self.assertEqual(3, len(answer))
 
+  def testEmptyTrackParse(self):
+    answer = self.tn.parse('')
+    self.assertEqual(0, len(answer))
+
   def testSingleTrackParse(self):
     answer = self.tn.parse('RJ255255138CN')
     self.assertEqual(answer[0]['number'], '255255138')
