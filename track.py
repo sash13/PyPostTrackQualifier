@@ -7,13 +7,7 @@ class TrackNumber(object):
     self.numbers = numbers
 
   def parse(self, numbers):
-    answ = []
     nums = numbers.upper()
-
-    for num in nums.split(','):
-      regex = r'(?P<first>[A-Z]+)?(?P<number>\d+)(?P<last>[A-Z]+)?'
-      group = re.match(regex, numbers) 
-      if group:
-        answ.append(group.groupdict())
-
+    r = re.compile('(?P<first>[A-Z]+)?(?P<number>\d+)(?P<last>[A-Z]+)?')
+    answ = [m.groupdict() for m in r.finditer(nums)]
     return answ
