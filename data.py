@@ -67,6 +67,11 @@ carriers = [
       'name': 'WeDo',
       'regx': r'(WD[A-Z]?)(\d{8}\d?)(CN)'
     },
+    # UPS
+    {
+      'name': 'UPS',
+      'regx': r'(1Z[A-Za-z0-9]{9}\d{7})|(\d{12})|(\d{10})|(\d{9})'
+    },
     # Default carier if unknow number
     # Must be last element in list
     {

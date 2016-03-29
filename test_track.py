@@ -67,25 +67,39 @@ class TrackNumberCheckTest(unittest.TestCase):
   def setUp(self):
     self.tn = TrackNumber()
 
+  def checkEqualName(self, num, answer):
+    ans = self.tn.check(num)
+    self.assertEqual(ans['name'], answer)
+
   def testCheckInternational(self):
-    ans = self.tn.check('RJ482508186CN')
-    self.assertEqual(ans['name'], 'International')
+    self.checkEqualName('RJ482508186CN', 'International')
 
   def testCheckWeDo1(self):
-    ans = self.tn.check('WD123456789CN')
-    self.assertEqual(ans['name'], 'WeDo')
+    self.checkEqualName('WD123456789CN', 'WeDo')
 
   def testCheckWeDo2(self):
-    ans = self.tn.check('WDA23456789CN')
-    self.assertEqual(ans['name'], 'WeDo')
+    self.checkEqualName('WDA23456789CN', 'WeDo')
 
   def testCheckError(self):
-    ans = self.tn.check('RK0267053CN')
-    self.assertEqual(ans['name'], 'Default')
+    self.checkEqualName('RK0267053CN', 'Default')
 
   def testCheckWeDoError(self):
-    ans = self.tn.check('WDA23456789VN')
-    self.assertEqual(ans['name'], 'Default')
+    self.checkEqualName('WDA23456789VN', 'Default')
+
+  def testCheckUPS1(self):
+    self.checkEqualName('1ZABCDERTJH1234567', 'UPS')
+
+  def testCheckUPS2(self):
+    self.checkEqualName('111111111111', 'UPS')
+
+  def testCheckUPS3(self):
+    self.checkEqualName('1111111111', 'UPS')
+
+  def testCheckUPS4(self):
+    self.checkEqualName('111111111', 'UPS')
+
+  def testCheckUPSError1(self):
+    self.checkEqualName('1ZABCDERTJH123456811', 'Default')
 
 if __name__ == '__main__':
   unittest.main()
