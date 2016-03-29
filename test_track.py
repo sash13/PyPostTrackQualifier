@@ -62,5 +62,30 @@ class TrackNumberValidTest(unittest.TestCase):
   def testValidOfInternationalTrackNumberTrue1(self):
     self.validWraper('RK026705563CN', True)
 
+class TrackNumberCheckTest(unittest.TestCase):
+
+  def setUp(self):
+    self.tn = TrackNumber()
+
+  def testCheckInternational(self):
+    ans = self.tn.check('RJ482508186CN')
+    self.assertEqual(ans['name'], 'International')
+
+  def testCheckWeDo1(self):
+    ans = self.tn.check('WD123456789CN')
+    self.assertEqual(ans['name'], 'WeDo')
+
+  def testCheckWeDo2(self):
+    ans = self.tn.check('WDA23456789CN')
+    self.assertEqual(ans['name'], 'WeDo')
+
+  def testCheckError(self):
+    ans = self.tn.check('RK0267053CN')
+    self.assertEqual(ans['name'], 'Default')
+
+  def testCheckWeDoError(self):
+    ans = self.tn.check('WDA23456789VN')
+    self.assertEqual(ans['name'], 'Default')
+
 if __name__ == '__main__':
   unittest.main()

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 
-carriers = 
-  [
+carriers = [
     {
       'name':   'International',
       'regx':   r'([RLVCEU][A-Z])(\d{8})(\d)(\w{2})', #AABBBBBBBBCDD
-      'chunk':  [ #AA
+      'chunk':  
+        [ #AA
                   [
                     {
                       'name': 'Type of parcel',
@@ -61,5 +61,17 @@ carriers =
                     }
                   ]
                 ]
+    },
+    # Wedo express "WD116437123CN"
+    {
+      'name': 'WeDo',
+      'regx': r'(WD[A-Z]?)(\d{8}\d?)(CN)'
+    },
+    # Default carier if unknow number
+    # Must be last element in list
+    {
+      'name': 'Default',
+      'regx': '',
+      'chunk': []
     }
   ]

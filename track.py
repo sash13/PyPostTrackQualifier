@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/env python
 import re
+from data import carriers
 
 class TrackNumberView(object):
   def __init__(self, d):
@@ -9,6 +10,13 @@ class TrackNumberView(object):
 class TrackNumber(object):
   def __init__(self, numbers = ''):
     self.numbers = numbers
+
+  def check(self, number=''):
+    for carrier in carriers:
+      regexp = re.compile(carrier['regx'])
+      if regexp.search(number) is not None:
+        return carrier
+    return carriers[-1] # return Default value
 
   def parse(self, numbers):
     nums = numbers.upper()
