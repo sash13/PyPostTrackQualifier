@@ -2,6 +2,7 @@
 #!/usr/bin/env python
 import re
 from data import carriers
+from string import maketrans 
 
 class TrackNumberView(object):
   def __init__(self, d):
@@ -11,12 +12,39 @@ class TrackNumber(object):
   def __init__(self, numbers = ''):
     self.numbers = numbers
 
+  def filterByMask(self, mask='', number=''):
+    intab = "abcdefghijklmnopqrstuvwxyz0123456789".upper()
+    outtab = '#' * 26 + '*' * 10
+    trantab = maketrans(intab, outtab)
+
+    for i in range(len(number)):
+      find = False
+      if number[i] in mask[i]:
+        find = True
+      else:
+        tmp = number[i].translate(trantab)
+        if tmp in mask[i]:
+          find = True
+        elif mask[i] in '!' and number[i].isalnum():
+          find = True
+        else:
+          find = False
+      if not find:
+        return find
+    return True
+
   def check(self, number=''):
+    find = []
+    num_len = len(number)
+    num_len = len(number)
+
     for carrier in carriers:
-      regexp = re.compile(carrier['regx'])
-      if regexp.search(number) is not None:
-        return carrier
-    return carriers[-1] # return Default value
+      if num_len in carrier['len']:
+        for mask in carrier['mask']:
+          if len(mask) == num_len and self.filterByMask(mask, number):
+            find.append(carrier)
+
+    return find if find else [carriers[-1]]
 
   def parse(self, numbers):
     nums = numbers.upper()

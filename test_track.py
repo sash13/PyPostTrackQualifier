@@ -62,6 +62,23 @@ class TrackNumberValidTest(unittest.TestCase):
   def testValidOfInternationalTrackNumberTrue1(self):
     self.validWraper('RK026705563CN', True)
 
+class TrackNumberFilterTest(unittest.TestCase):
+
+  def setUp(self):
+    self.tn = TrackNumber()
+
+  def checkEqualName(self, mask, num, ans):
+    valid = self.tn.filterByMask(mask, num)
+    if ans:
+      self.assertTrue(valid)
+    else:
+      self.assertFalse(valid)
+
+  def testCheckInternationalFilter(self):
+    self.checkEqualName('##*********##', 'RJ482508186CN', True)
+    self.checkEqualName('##*********##', '12482508186CN', False)
+
+#@unittest.skip
 class TrackNumberCheckTest(unittest.TestCase):
 
   def setUp(self):
@@ -69,7 +86,12 @@ class TrackNumberCheckTest(unittest.TestCase):
 
   def checkEqualName(self, num, answer):
     ans = self.tn.check(num)
-    self.assertEqual(ans['name'], answer)
+    summary = False
+    for a in ans:
+      if a['name'] in answer:
+        summary = True
+        break
+    self.assertTrue(summary)
 
   def testCheckInternational(self):
     self.checkEqualName('RJ482508186CN', 'International')
