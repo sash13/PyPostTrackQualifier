@@ -36,7 +36,6 @@ class TrackNumber(object):
   def check(self, number=''):
     find = []
     num_len = len(number)
-    num_len = len(number)
 
     for carrier in carriers:
       if num_len in carrier['len']:
@@ -58,7 +57,7 @@ class TrackNumber(object):
       return False  
 
     mult = [8, 6, 4, 2, 3, 5, 9, 7] #const for multiply
-    prod = sum(map(lambda inn: int(inn[0])*inn[1], zip(num.number[:8], mult)))
+    prod = sum([int(num.number[i])*mult[i] for i in xrange(len(mult))])
 
     check = 11 - (prod % 11)  # magic test
     check = check if check > 1 and check <= 9 else 0 if check == 10 else 5 if check == 11 else None

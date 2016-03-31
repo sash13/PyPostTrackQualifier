@@ -9,6 +9,7 @@ carriers = [
     # Wedo express "WD116437123CN"
     {
       'name': 'WeDo',
+      'url': 'http://www.wedoexpress.com/',
       'len': [13, 13],
       'mask': ['WD*********CN', 'WD#********CN']  
     },
